@@ -37,6 +37,13 @@ bash <(curl -s https://raw.githubusercontent.com/cmliu/socks5-for-serv00/main/in
 bash <(curl -s https://raw.githubusercontent.com/gshtwy/socks5-for-serv00/main/install-socks5-hysteria.sh)
 ```
 
+### 给 serv00 & ct8 一键安装 vmess-argo|socks5|hysteria2|nezha-agent  
+> 在老王四合一脚本基础上修改，缝合了cm的自动添加corn保活   
+
+```
+bash <(curl -s https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/sb_serv00_socks.sh)
+```
+
 ----
 ## Github Actions保活
 添加 Secrets.`ACCOUNTS_JSON` 变量，示例
