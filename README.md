@@ -30,13 +30,6 @@ killall -9 -u $(whoami)
 bash <(curl -s https://raw.githubusercontent.com/cmliu/socks5-for-serv00/main/install-socks5.sh)
 ```
 
-### 给 serv00 & ct8 一键安装 socks5 & hysteria2 & nezha-agent  
-> 天诚大佬在CM大佬脚本基础上修改，增加了HY2协议  
-
-```
-bash <(curl -s https://raw.githubusercontent.com/gshtwy/socks5-for-serv00/main/install-socks5-hysteria.sh)
-```
-
 ### 给 serv00 & ct8 一键安装 vmess-argo|socks5|hysteria2|nezha-agent  
 > 在老王四合一脚本基础上修改，缝合了cm的自动添加corn保活   
 
