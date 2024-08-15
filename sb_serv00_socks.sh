@@ -180,7 +180,7 @@ reading "\n确定继续安装吗？【y/n】: " choice
 
 creat_corn() {
     #read -p "是否添加 crontab 守护进程的计划任务(Y/N 回车N): " crontab
-		read -p "$(echo -e '\033[31m是否添加 crontab 守护进程的计划任务(Y/N 回车N):\033[0m')" crontab
+    read -p "$(echo -e '\033[31m是否添加 crontab 守护进程的计划任务(Y/N 回车N):\033[0m')" crontab
     crontab=${crontab^^} # 转换为大写
     if [ "$crontab" == "Y" ]; then
       echo "添加 crontab 守护进程的计划任务"
