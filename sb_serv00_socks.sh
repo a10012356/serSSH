@@ -179,7 +179,8 @@ reading "\n确定继续安装吗？【y/n】: " choice
 }
 
 creat_corn() {
-    read -p "是否添加 crontab 守护进程的计划任务(Y/N 回车N): " crontab
+    #read -p "是否添加 crontab 守护进程的计划任务(Y/N 回车N): " crontab
+		read -p "$(echo -e '\033[31m是否添加 crontab 守护进程的计划任务(Y/N 回车N):\033[0m')" crontab
     crontab=${crontab^^} # 转换为大写
     if [ "$crontab" == "Y" ]; then
       echo "添加 crontab 守护进程的计划任务"
@@ -433,15 +434,15 @@ EOF
 # running files
 run_sb() {
 	if [ -e npm ]; then
-	    nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
-	    sleep 2
-	    pgrep -x "npm" > /dev/null && green "npm is running" || {
-	        red "npm is not running, restarting..."
-	        pkill -x "npm"
-	        nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
-	        sleep 2
-	        purple "npm restarted"
-	    }
+	  nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
+	  sleep 2
+	  pgrep -x "npm" > /dev/null && green "npm is running" || {
+	     red "npm is not running, restarting..."
+	     pkill -x "npm"
+	     nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
+	     sleep 2
+	     purple "npm restarted"
+	  }
 	else
 	    purple "NEZHA variable is empty, skipping running"
 	fi
@@ -526,7 +527,7 @@ menu() {
    echo  "==============="
    yellow "4. 清理所有进程"
    echo  "==============="
-   yellow "5. 添加守护进程 corn"
+   yellow "5. 添加守护进程corn"
    echo  "==============="
    red "0. 退出脚本"
    echo "==========="
