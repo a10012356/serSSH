@@ -433,23 +433,29 @@ EOF
 
 # running files
 run_sb() {
-	if [ -e npm ]; then
-		nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
-		sleep 2
-		pgrep -x "npm" > /dev/null && green "npm is running" || {
-			red "npm is not running, restarting..."
-			pkill -x "npm"
-			sleep 2
-			purple "npm restarted"
-		}
-	else
-		purple "NEZHA variable is empty, skipping running"
-	fi
+  if [ -e npm ]; then
+    nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
+    sleep 2
+    pgrep -x "npm" > /dev/null && green "npm is running" || {
+      red "npm is not running, restarting..."
+      pkill -x "npm"
+      sleep 2
+      purple "npm restarted"
+    }
+  else
+    purple "NEZHA variable is empty, skipping running"
+  fi
 
   if [ -e web ]; then
     nohup ./web run -c config.json >/dev/null 2>&1 &
     sleep 2
-    pgrep -x "web" > /dev/null && green "web is running" || { red "web is not running, restarting..."; pkill -x "web" && nohup ./web run -c config.json >/dev/null 2>&1 & sleep 2; purple "web restarted"; }
+    pgrep -x "web" > /dev/null && green "web is running" || {
+      red "web is not running, restarting..."
+      pkill -x "web"
+      nohup ./web run -c config.json >/dev/null 2>&1 &
+      sleep 2
+      purple "web restarted"
+    }
   fi
 
   if [ -e bot ]; then
@@ -462,7 +468,13 @@ run_sb() {
     fi
     nohup ./bot $args >/dev/null 2>&1 &
     sleep 2
-    pgrep -x "bot" > /dev/null && green "bot is running" || { red "bot is not running, restarting..."; pkill -x "bot" && nohup ./bot "${args}" >/dev/null 2>&1 & sleep 2; purple "bot restarted"; }
+    pgrep -x "bot" > /dev/null && green "bot is running" || {
+      red "bot is not running, restarting..."
+      pkill -x "bot"
+      nohup ./bot "${args}" >/dev/null 2>&1 &
+      sleep 2
+      purple "bot restarted"
+    }
   fi
 }
 
