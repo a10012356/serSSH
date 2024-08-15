@@ -434,15 +434,14 @@ EOF
 # running files
 run_sb() {
 	if [ -e npm ]; then
-	  nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
-	  sleep 2
-	  pgrep -x "npm" > /dev/null && green "npm is running" || {
-	     red "npm is not running, restarting..."
-	     pkill -x "npm"
-	     nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
-	     sleep 2
-	     purple "npm restarted"
-	  }
+	    nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &
+	    sleep 2
+	    pgrep -x "npm" > /dev/null && green "npm is running" || {
+	        red "npm is not running, restarting..."
+	        pkill -x "npm"
+	        sleep 2
+	        purple "npm restarted"
+	    }
 	else
 	    purple "NEZHA variable is empty, skipping running"
 	fi
