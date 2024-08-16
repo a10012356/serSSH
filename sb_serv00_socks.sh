@@ -538,7 +538,7 @@ menu() {
    echo  "==============="
    yellow "4. 清理所有进程"
    echo  "==============="
-   yellow "5. 启动singbox"
+   yellow "5. 重启singbox"
    echo  "==============="
    yellow "6. 添加守护进程"
    echo  "==============="
