@@ -551,7 +551,7 @@ menu() {
         2) uninstall_singbox ;; 
         3) cat $WORKDIR/list.txt ;; 
 	4) kill_all_tasks ;;
- 	5) run_sb && sleep 3 ;;
+ 	5) cd $WORKDIR && run_sb && sleep 3 ;;
         6) creat_corn ;;
         0) exit 0 ;;
         *) red "无效的选项，请输入 0 到 6" ;;
