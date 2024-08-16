@@ -19,15 +19,15 @@ else
   if [ -e "${WORKDIR}/nezha.sh" ] && [ -e "${WORKDIR}/config.json" ]; then
     echo "添加 nezha & singbox 的 crontab 重启任务"
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_NEZHA} && ${CRON_SB}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_NEZHA} && ${CRON_SB}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") || (crontab -l; echo "*/12 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_SB}") || (crontab -l; echo "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_SB}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") || (crontab -l; echo "*/10 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_SB}") || (crontab -l; echo "*/10 * * * * pgrep -x \"web\" > /dev/null || ${CRON_SB}") | crontab -
   elif [ -e "${WORKDIR}/nezha.sh" ]; then
     echo "添加 nezha 的 crontab 重启任务"
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_NEZHA}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_NEZHA}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") || (crontab -l; echo "*/12 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") || (crontab -l; echo "*/10 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") | crontab -
   elif [ -e "${WORKDIR}/config.json" ]; then
     echo "添加 singbox 的 crontab 重启任务"
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_SB}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_SB}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_SB}") || (crontab -l; echo "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_SB}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_SB}") || (crontab -l; echo "*/10 * * * * pgrep -x \"web\" > /dev/null || ${CRON_SB}") | crontab -
   fi
 fi
