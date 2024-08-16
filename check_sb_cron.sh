@@ -6,7 +6,7 @@ WORKDIR="/home/${USERNAME,,}/logs"
 CRON_NEZHA="nohup ${WORKDIR}/nezha.sh >/dev/null 2>&1 &"
 CRON_SB="nohup ${WORKDIR}/web run -c config.json >/dev/null 2>&1 &"
 PM2_PATH="/home/${USERNAME,,}/.npm-global/lib/node_modules/pm2/bin/pm2"
-CRON_JOB="*/12 * * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
+CRON_JOB="*/10 * * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
 REBOOT_COMMAND="@reboot pkill -kill -u $(whoami) && $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
 
 echo "检查并添加 crontab 任务"
