@@ -179,8 +179,8 @@ reading "\n确定继续安装吗？【y/n】: " choice
 }
 
 creat_corn() {
-    #read -p "是否添加 crontab 守护进程的计划任务(Y/N 回车N): " crontab
-    read -p "$(echo -e '\033[31m是否添加 crontab 守护进程的计划任务(Y/N 回车N):\033[0m')" crontab
+    reading "是否添加 crontab 守护进程的计划任务(Y/N 回车N): " crontab
+    #read -p "$(echo -e '\033[31m是否添加 crontab 守护进程的计划任务(Y/N 回车N):\033[0m')" crontab
     crontab=${crontab^^} # 转换为大写
     if [ "$crontab" == "Y" ]; then
       echo "添加 crontab 守护进程的计划任务"
@@ -538,20 +538,23 @@ menu() {
    echo  "==============="
    yellow "4. 清理所有进程"
    echo  "==============="
-   yellow "5. 添加守护进程corn"
+   yellow "5. 启动singbox"
+   echo  "==============="
+   yellow "6. 添加守护进程"
    echo  "==============="
    red "0. 退出脚本"
    echo "==========="
-   reading "请输入选择(0-5): " choice
+   reading "请输入选择(0-6): " choice
    echo ""
     case "${choice}" in
         1) install_singbox ;;
         2) uninstall_singbox ;; 
         3) cat $WORKDIR/list.txt ;; 
-	      4) kill_all_tasks ;;
-        5) creat_corn ;;
+	4) kill_all_tasks ;;
+ 	5) run_sb && sleep 3 ;;
+        6) creat_corn ;;
         0) exit 0 ;;
-        *) red "无效的选项，请输入 0 到 5" ;;
+        *) red "无效的选项，请输入 0 到 6" ;;
     esac
 }
 menu
