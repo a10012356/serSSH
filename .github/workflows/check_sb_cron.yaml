@@ -31,5 +31,5 @@ jobs:
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
             
-      - name: check_nezha_cron
+      - name: check_sb_cron
         run: ./sshpass.sh
