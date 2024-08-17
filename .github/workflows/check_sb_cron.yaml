@@ -30,9 +30,6 @@ jobs:
             ssh=$(echo "$account" | jq -r '.ssh')
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
-            echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/check_sb_cron.sh)'" >> sshpass.sh
-          done < <(jq -c '.[]' accounts.json)
-          chmod +x sshpass.sh
-
-      - name: check_sb_cron
+            
+      - name: check_nezha_cron
         run: ./sshpass.sh
