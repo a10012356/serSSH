@@ -31,10 +31,10 @@ jobs:
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
             echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' '" >> sshpass.sh
-            echo "pgrep -f dashboard | xargs -r kill;" >> sshpass.sh
-            echo "pgrep -f nezha-agent | xargs -r kill;" >> sshpass.sh
-            echo "nohup /home/zzzxxx/.nezha-dashboard/start.sh >/dev/null 2>&1 &;" >> sshpass.sh
-            echo "nohup /home/zzzxxx/.nezha-agent/start.sh >/dev/null 2>&1 &;" >> sshpass.sh
+            echo "pgrep -f dashboard | xargs -r kill" >> sshpass.sh
+            echo "pgrep -f nezha-agent | xargs -r kill" >> sshpass.sh
+            echo "nohup /home/zzzxxx/.nezha-dashboard/start.sh >/dev/null 2>&1 &" >> sshpass.sh
+            echo "nohup /home/zzzxxx/.nezha-agent/start.sh >/dev/null 2>&1 &" >> sshpass.sh
             echo "'" >> sshpass.sh
           done < <(jq -c '.[]' accounts.json)
           chmod +x sshpass.sh
