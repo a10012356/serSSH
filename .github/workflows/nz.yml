@@ -1,27 +1,43 @@
-name: Nezha Dashboard and Agent Monitor
+name: nz_charge
 
 on:
+  workflow_dispatch: # 手动触发工作流
   schedule:
-    # 每隔5分钟运行一次，可以根据需要调整时间
-    - cron: '*/5 * * * *'
+    - cron: "30 01,07,13,19 * * *"  # 每天01:30、07:30、13:30、19:30 各执行1次
 
 jobs:
-  check-nezha-processes:
+  execute-commands:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Set up SSHPass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
-    - name: Install sshpass
-      run: sudo apt-get install -y sshpass
+      - name: Get ACCOUNTS_JSON
+        id: get-accounts
+        run: |
+          echo "$ACCOUNTS_JSON" > accounts.json
+        env:
+          ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
+        # 从 GitHub Secrets 获取 ACCOUNTS_JSON 变量，并保存到文件 accounts.json
 
-    - name: Check and restart Nezha dashboard and agent processes
-      run: |
-        sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-        pgrep -f 'dashboard' | xargs -r kill
-        pgrep -f 'nezha-agent' | xargs -r kill
-        cd /home/zzzxxx/.nezha-dashboard
-        nohup /home/zzzxxx/.nezha-dashboard/start.sh >/dev/null 2>&1 &
-        cd /home/zzzxxx/.nezha-agent
-        nohup /home/zzzxxx/.nezha-agent/start.sh >/dev/null 2>&1 &"
+      - name: Generate SSH Commands
+        id: generate-ssh-commands
+        run: |
+          echo "#!/bin/bash" > sshpass.sh
+          while IFS= read -r account; do
+            username=$(echo "$account" | jq -r '.username')
+            password=$(echo "$account" | jq -r '.password')
+            ssh=$(echo "$account" | jq -r '.ssh')
+
+            echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
+            echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' '" >> sshpass.sh
+            echo "pgrep -f dashboard | xargs -r kill;" >> sshpass.sh
+            echo "pgrep -f nezha-agent | xargs -r kill;" >> sshpass.sh
+            echo "nohup /home/zzzxxx/.nezha-dashboard/start.sh >/dev/null 2>&1 &;" >> sshpass.sh
+            echo "nohup /home/zzzxxx/.nezha-agent/start.sh >/dev/null 2>&1 &;" >> sshpass.sh
+            echo "'" >> sshpass.sh
+          done < <(jq -c '.[]' accounts.json)
+          chmod +x sshpass.sh
+
+      - name: Execute SSH Commands
+        run: ./sshpass.sh
