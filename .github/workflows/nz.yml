@@ -13,23 +13,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
 
     - name: Check and restart Nezha dashboard and agent processes
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-        # 终止现有的 dashboard 进程
+        sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
         pgrep -f 'dashboard' | xargs -r kill
-        # 终止现有的 agent 进程
         pgrep -f 'nezha-agent' | xargs -r kill
-
-        # 启动 dashboard
         cd /home/zzzxxx/.nezha-dashboard
         nohup /home/zzzxxx/.nezha-dashboard/start.sh >/dev/null 2>&1 &
-
-        # 启动 agent
         cd /home/zzzxxx/.nezha-agent
         nohup /home/zzzxxx/.nezha-agent/start.sh >/dev/null 2>&1 &"
